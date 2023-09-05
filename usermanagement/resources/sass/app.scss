@@ -1,0 +1,42 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+.container {
+    min-width: 100%;
+}
+
+.text-grey{
+    color: grey;
+}
+
+.d-flex{
+    display: flex;
+}
+.spaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+// .dataCustomPagination .leading-5 {
+//     width: 40px !important;
+//     display: inline-table !important;
+// }
+.dataCustomPagination .relative {
+    margin: 6px;
+    margin-bottom: 1rem !important;
+    border-radius: 10px;
+}
+.dataCustomPagination .shadow-sm{
+    box-shadow: none !important;
+}
+
+.dataCustomPagination svg {
+    display: none;
+}
+
