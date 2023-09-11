@@ -7,60 +7,31 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>User Management</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources\sass\app.scss', 'resources\js\app.js'])
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> --}}
-
-    {{-- Sweet alert script  --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    User Management
+                    {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    @guest
-                    <ul class="navbar-nav me-auto"></ul>
-                    @else
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('userslist') }}">
-                                Users
-                            </a>
-                        </li>
-                        @if(session()->get('user')->role=='1')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('permissionslist') }}">
-                                Permissions
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('activitylist') }}">
-                                Activity Logs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('blockedItemslist') }}">
-                                Blocked Items
-                            </a>
-                        </li>
-                        @endif
+
                     </ul>
-                    @endguest
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -84,7 +55,6 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -106,51 +76,5 @@
             @yield('content')
         </main>
     </div>
-
-
-    <script type="text/javascript">
-
-        function confirmation(ev){
-            ev.preventDefault();
-
-            var urlToRedirect = ev.currentTarget.getAttribute('href');
-
-            swal({
-                title: "Are you sure to delete this item?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((willCancel)=>
-            {
-
-                if(willCancel){
-                    window.location.href=urlToRedirect;
-                }
-
-            });
-        }
-
-        function restoreconfirmation(ev){
-            ev.preventDefault();
-
-            var urlToRedirect = ev.currentTarget.getAttribute('href');
-
-            swal({
-                title: "Are you sure to restore this item?",
-                icon: "info",
-                buttons: true,
-                dangerMode: true,
-            }).then((willCancel)=>
-            {
-
-                if(willCancel){
-                    window.location.href=urlToRedirect;
-                }
-
-            });
-        }
-
-    </script>
-
 </body>
 </html>

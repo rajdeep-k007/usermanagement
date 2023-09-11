@@ -35,7 +35,7 @@ Route::post('/email/resend', 'VerificationController@resend')->name('verificatio
 
 // Pages
     Route::group(['middleware'=>'auth'], function(){
-    
+
         //users
         Route::get('/userslist', [App\Http\Controllers\UsersController::class, 'show'])->name('userslist');
         Route::get('/createUserPage', [App\Http\Controllers\UsersController::class, 'createUserPage'])->name('createUserPage');
@@ -43,32 +43,34 @@ Route::post('/email/resend', 'VerificationController@resend')->name('verificatio
         Route::get('/removeUser/{id}', [App\Http\Controllers\UsersController::class, 'remove'])->name('usersRemove');
         Route::get('/viewUser/{id}', [App\Http\Controllers\UsersController::class, 'view'])->name('viewUser');
         Route::get('/restoreUser/{id}', [App\Http\Controllers\UsersController::class, 'restore'])->name('restoreUser');
-    
+
         //permissions
         Route::get('/permissionslist', [App\Http\Controllers\PermissionController::class, 'show'])->name('permissionslist');
         Route::get('/removePermission/{id}', [App\Http\Controllers\PermissionController::class, 'remove'])->name('permissionsRemove');
-    
+        Route::get('/createRolePage', [App\Http\Controllers\PermissionController::class, 'createPage'])->name('createRolePage');
+        Route::post('/addRole', [App\Http\Controllers\PermissionController::class, 'create'])->name('createRolePage');
+
         //activity
         Route::get('/activitylist', [App\Http\Controllers\ActivityController::class, 'show'])->name('activitylist');
         Route::get('/activity/{id}', [App\Http\Controllers\ActivityController::class, 'remove'])->name('activityRemove');
-    
+
         //blocked Items
         Route::get('/blockedItemslist', [App\Http\Controllers\BlockedItemsController::class, 'show'])->name('blockedItemslist');
         Route::get('/blockedItems/{id}', [App\Http\Controllers\BlockedItemsController::class, 'remove'])->name('blockedItemRemove');
         Route::get('/createBlockedItemPage', [App\Http\Controllers\BlockedItemsController::class, 'createPage'])->name('createBlockedItemPage');
-        Route::post('/createBlockedItem', [App\Http\Controllers\BlockedItemsController::class, 'create'])->name('createBlockedItem');
-    
+        Route::post('/addItemToBlock', [App\Http\Controllers\BlockedItemsController::class, 'create'])->name('addItemToBlock');
+
         // Route::get('/permissionslist', function(){ return view('pages/permissions'); })->name('permissionslist');
         // Route::get('/activitylist', function(){ return view('pages/activitylogs'); })->name('activitylist');
         // Route::get('/blockedItemslist', function(){ return view('pages/blockeditems'); })->name('blockedItemslist');
-    
-    
+
+
         // Profile
         Route::get('/userProfile', function(){ return view('userProfile'); })->name('profile');
         Route::get('/editProfile', function(){ return view('editProfile'); })->name('editProfile');
         Route::post('/userprofileEdit/{id}', [App\Http\Controllers\UsersController::class, 'submitEditForm'])->name('userprofile.form.submit');
-    
-    
+
+
     });
 // ----------------------------Authentication section----------------------------
     // GITHUB

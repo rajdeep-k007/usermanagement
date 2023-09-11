@@ -21,4 +21,17 @@ class PermissionController extends Controller
         }
         return redirect('/permissionslist');
     }
+
+
+    // to redirect to create role page
+    public function createPage(){
+        return view('/pages/permissionPage/createRole');
+    }
+
+
+    // to create role
+    public function create(){
+
+    }
+
 }

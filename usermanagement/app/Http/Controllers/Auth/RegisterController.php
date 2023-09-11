@@ -67,8 +67,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        // $this->validator($data)->validate();
+// $this->validator($data)->validate();
 
         // $user = User::create([
         //     'name' => $data['name'],
@@ -80,6 +79,7 @@ class RegisterController extends Controller
         // Mail::to($user->email)->send(new VerificationEmail($user));
 
         // return redirect()->route('login')->with('success', 'Please check your email for a verification link.');
+
 
         return User::create([
             'name' => $data['name'],

@@ -16,7 +16,7 @@ class BlockedItemsController extends Controller
     public function remove($id){
         $item = blockedItem::find($id);
         if($item){
-            $item->delete();
+            $item->delete();    
         }
         return redirect('/blockedItemslist');
     }

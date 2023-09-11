@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header spaceBetween" class="d-flex">
                     <div >Permissions List</div>
-                    <button class="btn btn-info">+ Create Permission</button>
+                    <a class="btn btn-info" href="createRolePage">+ Create Role</a>
                 </div>
 
                 <div class="card-body">
