@@ -30,7 +30,9 @@
                                     <th>Note</th>
                                     <th>Blocked By</th>
                                     <th>Blocked At</th>
+                                    @if(Auth::user()->role=="1")
                                     <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,20 +43,33 @@
                                         <td>{{ $blockedItem->id }}</td>
                                         <td>{{ $blockedItem->type }}</td>
                                         <td>{{ $blockedItem->value }}</td>
-                                        <td>{{ $blockedItem->note }}</td>
-                                        <td>{{ $blockedItem->blocked_by }}</td>
+                                        <td>{{ $blockedItem->note!=='null'?$blockedItem->note:'-' }}</td>
+                                        <td>{{ $blockedItem->user_id }}</td>
                                         <td>{{ $blockedItem->created_at->diffForHumans() }}</td>
+                                        @if(Auth::user()->role=="1")
                                         <td>
                                             <button class="btn btn-primary"
                                                 href="/editBlockedItem/{{$blockedItem->id}}">
                                                 Edit
-                                            </button>
-                                            <a class="btn btn-danger"
+                                            </button> | 
+
+
+                                            @if($blockedItem->deleted_at != null)
+                                            <a class="btn btn-info"
+                                                href="/restoreBlockedItem/{{$blockedItem->id}}"
+                                                onclick="confirmation(event)">
+                                                Restore
+                                            </a>
+                                            @else
+                                                <a class="btn btn-danger"
                                                 href="/removeBlockedItem/{{$blockedItem->id}}"
                                                 onclick="confirmation(event)">
                                                 Remove
                                             </a>
+                                            @endif
+
                                         </td>
+                                        @endif
                                     </tr>
 
                                 @endforeach

@@ -6,8 +6,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header spaceBetween" class="d-flex">
+                    <a class="btn btn-info" href="createPermissionPage">+ Create Permission</a>
+                    <hr>
                     <div >Permissions List</div>
-                    <a class="btn btn-info" href="createRolePage">+ Create Role</a>
                 </div>
 
                 <div class="card-body">
@@ -26,9 +27,9 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
+                                    @if(Auth::user()->role=="1")
                                     <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,19 +39,23 @@
                                     <tr>
                                         <td>{{ $permission->id }}</td>
                                         <td>{{ $permission->name }}</td>
-                                        <td>{{ $permission->email }}</td>
-                                        <td>{{ $permission->role=='1'?'Admin':'User' }}</td>
+                                        @if(Auth::user()->role=="1")
                                         <td>
-                                            <button class="btn btn-primary"
-                                                href="/editPermission/{{$permission->id}}">
-                                                Edit
-                                            </button>
+
+                                            @if($user->deleted_at != null)
                                             <a class="btn btn-danger"
                                                 href="/removePermission/{{$permission->id}}"
                                                 onclick="confirmation(event)">
                                                 Remove
                                             </a>
+                                            @else
+                                            <a class="btn btn-info"
+                                                href="/restorePermission/{{$permission->id}}">
+                                                Restore
+                                            </a>
+                                            @endif
                                         </td>
+                                        @endif
                                     </tr>
 
                                 @endforeach

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 
@@ -17,8 +18,12 @@ use Laravel\Socialite\Facades\Socialite;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('/logout', 'Auth\AuthController@logout');
 
 Route::get('/', function () {
+    // Log::info(Auth::user());
+     $clientIp = \Request::ip();
+    Log::channel('customlog')->info("User with ip: ".$clientIp." logged in !");
     return redirect('/login');
 });
 
@@ -28,16 +33,16 @@ Auth::routes();
 
 
 //email
-Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
-Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
-Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
+// Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
+// Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
+// Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
 
 
 // Pages
     Route::group(['middleware'=>'auth'], function(){
 
         //users
-        Route::get('/userslist', [App\Http\Controllers\UsersController::class, 'show'])->name('userslist');
+        Route::get('/userslist', [App\Http\Controllers\UsersController::class, 'show'])->name('userslist')->middleware('log.route');
         Route::get('/createUserPage', [App\Http\Controllers\UsersController::class, 'createUserPage'])->name('createUserPage');
         Route::post('/createUser', [App\Http\Controllers\UsersController::class, 'createUser'])->name('createUser');
         Route::get('/removeUser/{id}', [App\Http\Controllers\UsersController::class, 'remove'])->name('usersRemove');
@@ -45,30 +50,28 @@ Route::post('/email/resend', 'VerificationController@resend')->name('verificatio
         Route::get('/restoreUser/{id}', [App\Http\Controllers\UsersController::class, 'restore'])->name('restoreUser');
 
         //permissions
-        Route::get('/permissionslist', [App\Http\Controllers\PermissionController::class, 'show'])->name('permissionslist');
+        Route::get('/permissionslist', [App\Http\Controllers\PermissionController::class, 'show'])->name('permissionslist')->middleware('log.route');
         Route::get('/removePermission/{id}', [App\Http\Controllers\PermissionController::class, 'remove'])->name('permissionsRemove');
         Route::get('/createRolePage', [App\Http\Controllers\PermissionController::class, 'createPage'])->name('createRolePage');
         Route::post('/addRole', [App\Http\Controllers\PermissionController::class, 'create'])->name('createRolePage');
 
         //activity
-        Route::get('/activitylist', [App\Http\Controllers\ActivityController::class, 'show'])->name('activitylist');
+        Route::get('/activitylist', [App\Http\Controllers\ActivityController::class, 'show'])->name('activitylist')->middleware('log.route');
         Route::get('/activity/{id}', [App\Http\Controllers\ActivityController::class, 'remove'])->name('activityRemove');
+        Route::get('/removeActivityLog/{id}', [App\Http\Controllers\ActivityController::class, 'remove'])->name('activityRemove');
+        Route::get('/restoreActivity/{id}', [App\Http\Controllers\ActivityController::class, 'restore'])->name('restoreActivity');
 
         //blocked Items
-        Route::get('/blockedItemslist', [App\Http\Controllers\BlockedItemsController::class, 'show'])->name('blockedItemslist');
-        Route::get('/blockedItems/{id}', [App\Http\Controllers\BlockedItemsController::class, 'remove'])->name('blockedItemRemove');
+        Route::get('/blockedItemslist', [App\Http\Controllers\BlockedItemsController::class, 'show'])->name('blockedItemslist')->middleware('log.route');
         Route::get('/createBlockedItemPage', [App\Http\Controllers\BlockedItemsController::class, 'createPage'])->name('createBlockedItemPage');
         Route::post('/addItemToBlock', [App\Http\Controllers\BlockedItemsController::class, 'create'])->name('addItemToBlock');
-
-        // Route::get('/permissionslist', function(){ return view('pages/permissions'); })->name('permissionslist');
-        // Route::get('/activitylist', function(){ return view('pages/activitylogs'); })->name('activitylist');
-        // Route::get('/blockedItemslist', function(){ return view('pages/blockeditems'); })->name('blockedItemslist');
-
+        Route::get('/removeBlockedItem/{id}', [App\Http\Controllers\BlockedItemsController::class, 'remove'])->name('blockedItemRemove');
+        Route::get('/restoreBlockedItem/{id}', [App\Http\Controllers\BlockedItemsController::class, 'restore'])->name('blockedItemRestore');
 
         // Profile
         Route::get('/userProfile', function(){ return view('userProfile'); })->name('profile');
         Route::get('/editProfile', function(){ return view('editProfile'); })->name('editProfile');
-        Route::post('/userprofileEdit/{id}', [App\Http\Controllers\UsersController::class, 'submitEditForm'])->name('userprofile.form.submit');
+        Route::patch('/userprofileEdit/{id}', [App\Http\Controllers\UsersController::class, 'submitEditForm'])->name('userprofile.form.submit');
 
 
     });

@@ -9,7 +9,7 @@ class ActivityController extends Controller
 {
     // To show list of all activity
     public function show(){
-        $activityLogs = activitylog::paginate(5);
+        $activityLogs = activitylog::withTrashed()->paginate(50);
         return view('pages/activityPage/activitylogs', compact('activityLogs'));
     }
 
@@ -21,4 +21,15 @@ class ActivityController extends Controller
         }
         return redirect('/activitylist');
     }
+
+    // To restore item
+    public function restore($id){
+        $item = activitylog::withTrashed()->find($id);
+        // dd($item);
+        if($item){
+            $item->restore();
+        }
+        return redirect('/activitylist');
+    }
+
 }

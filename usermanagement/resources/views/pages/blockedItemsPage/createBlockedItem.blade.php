@@ -18,57 +18,44 @@
 
                                 <div class="col-md-6">
                                     <select name="block_type" class="form-control">
-                                        @foreach(['email'=>'E-mail','name'=>'User Name'] as $key => $value)
+                                        @foreach(['email'=>'E-mail','location'=>'Location', 'domain'=>'Domain','ip'=>'Ip Address'] as $key => $value)
                                             <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
+
                         <div>
                             <div class="row mb-3">
-                                <label for="useremail" class="col-md-4 col-form-label text-md-end">User email:</label>
+
+                                <label for="block_value" class="col-md-4 col-form-label text-md-end">Block Value:</label>
 
                                 <div class="col-md-6">
-                                    <input class="form-control" type="email" name="useremail" id="useremail">
+                                    <input class="form-control" type="text" name="block_value" id="block_value" required>
                                 </div>
+
                             </div>
                         </div>
+
                         <div>
                             <div class="row mb-3">
-                                <label for="userrole" class="col-md-4 col-form-label text-md-end">User role:</label>
+                                <label for="blocked_user" class="col-md-4 col-form-label text-md-end">Blocked User:</label>
 
                                 <div class="col-md-6">
-                                    <select name="userrole" class="form-control">
-                                        @foreach (['User'=>'0','Admin'=>'1'] as $key => $value)
-                                            <option value="{{ $value }}">{{ $key }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input class="form-control" type="text" name="blocked_user" id="blocked_user">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="block_note" class="col-md-4 col-form-label text-md-end">Blocked Note:</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <textarea class="form-control" type="text" name="block_note" id="block_note"></textarea>
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-4">

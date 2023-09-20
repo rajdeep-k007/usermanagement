@@ -57,6 +57,12 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'customlog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/usermanagementlogs.log'),
+            'level' => 'info',
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

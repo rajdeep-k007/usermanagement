@@ -49,7 +49,7 @@
 
                             <div class="col-md-6">
                                 <div class="col-form-label text-grey">
-                                {{ $user->created_at->diffForHumans(); }}
+                                {{ $user->created_at->diffForHumans() }}
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
 
                             <div class="col-md-6">
                                 <div class="col-form-label text-grey">
-                                {{ $user->updated_at->diffForHumans(); }}
+                                {{ $user->updated_at->diffForHumans() }}
                                 </div>
                             </div>
                         </div>

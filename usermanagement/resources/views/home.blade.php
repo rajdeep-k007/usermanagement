@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
 
         {{-- we set USER in session here  --}}
-        {{ session()->put('user',$user) }}
+        {{ session()->put('user',Auth::user()) }}
 
         {{-- if user not verified  --}}
         @if(session()->get('user')->isMailChecked=='0')

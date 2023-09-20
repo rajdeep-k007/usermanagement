@@ -37,11 +37,11 @@ class UsersController extends Controller
         $input = $request->all();
         User::create($input);
 
-        $log = '';
-        $log = session()->get('user')->id;
-        $log ;
+        // $log = '';
+        // $log = session()->get('user')->id;
+        // $log ;
 
-        activitylog::create($log);
+        // activitylog::create($log);
         return redirect('userslist');
     }
 
@@ -74,17 +74,19 @@ class UsersController extends Controller
     public function submitEditForm(Request $request){
 
         // $request->validate([
-        //     'location' => 'required|regex:/^[\sA-Za-z0-9]+$/u',
-        //     'bio' => 'required',
+        //     'city' => 'required|regex:/^[\sA-Za-z]+$/u',
+        //     'country' => 'required',
         // ]);
         $input = $request->all();
 
-        if($input('location')=='' && $input('bio')==''){
-            // Nothing to update
-        }else{
-            // update
-            dd($input);
-        }
+            $userToUpdate = User::find($input['id']);
+            
+            $userToUpdate->city = $input['city'];
+            $userToUpdate->country = $input['country'];
+
+            $userToUpdate->update();
+            return redirect()->route('editProfile')->with('success','User location data updated successfully!');
+
 
     }
 

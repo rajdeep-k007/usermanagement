@@ -8,9 +8,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header spaceBetween" class="d-flex">
-                    <div >Users List </div>
-                    <a class="btn btn-info" href="createUserPage" >+ Create User</a>
+                <div class="card-header ">
+                    <div class="spaceBetween " >
+                        <div class="align-self-end">
+                            <a class="btn btn-info" href="createUserPage" >+ Create User</a>
+                        </div>
+                        <hr>
+                        <div >Users List </div>
+                    </div>
                 </div>
 
                 <div class="card-body">
@@ -43,12 +48,12 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->role=='1'?'Admin':'User' }}</td>
-                                        @if(session('user')->role=='1')
+                                        @if(Auth::user()->role=='1')
                                         <td>
                                             <button class="btn btn-primary"
                                                 href="/editUser/{{$user->id}}">
                                                 Edit
-                                            </button>
+                                            </button> |
                                             @if($user->deleted_at != null)
                                             <a class="btn btn-info"
                                                 href="/restoreUser/{{$user->id}}"
@@ -56,14 +61,14 @@
                                                 Restore
                                             </a>
                                             @else
-                                                @if(session('user')->id!==$user->id)
+                                                @if(Auth::user()->id!==$user->id)
                                                    <a class="btn btn-danger"
                                                        href="/removeUser/{{$user->id}}"
                                                        onclick="confirmation(event)">
                                                        Remove
                                                    </a>
                                                    @endif
-                                            {{-- {{ session('user')->role=='1'?'01':'00' }} {{ $user->deleted_at}} --}}
+                                            {{-- {{ Auth::user()->role=='1'?'01':'00' }} {{ $user->deleted_at}} --}}
                                             @endif
                                         </td>
                                         @else

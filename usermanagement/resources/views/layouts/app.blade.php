@@ -15,6 +15,55 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script language="javascript" type="text/javascript">
+
+        var map;
+        var geocoder;
+        function InitializeMap() {
+
+            var latlng = new google.maps.LatLng(22.235675, 68.965558);
+            var myOptions =
+            {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                disableDefaultUI: true
+            };
+            map = new google.maps.Map(document.getElementById("map"), myOptions);
+        }
+
+        function FindLocaiton() {
+            geocoder = new google.maps.Geocoder();
+            InitializeMap();
+
+            var address = document.getElementById("addressinput").value;
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+
+                }
+                else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+
+        }
+
+
+        function Button1_onclick() {
+            FindLocaiton();
+        }
+
+        window.onload = InitializeMap;
+
+    </script>
+
 </head>
 <body>
     <div id="app">
@@ -30,6 +79,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('userslist') }}">Users</a> </li>
+                        {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('permissionslist') }}">Permissions</a> </li> --}}
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('activitylist') }}">Activity</a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('blockedItemslist') }}">Restricted-Accounts</a> </li>
 
                     </ul>
 
@@ -55,6 +109,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                        {{ Auth::user()->name . '\'s Profile '  }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -76,5 +134,6 @@
             @yield('content')
         </main>
     </div>
+
 </body>
 </html>

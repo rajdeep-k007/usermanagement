@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'role' => \App\Http\Middleware\roleMiddleware::class,
         'isAdmin' => \App\Http\Middleware\AdminMiddleware::class,
         'is-ban' => \App\Http\Middleware\forbidUserMw::class,
+        'log.route' => \App\Http\Middleware\RequestLoggerMiddleware::class,
     ];
 }

@@ -36,11 +36,11 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('381359e1122765'),
-            'password' => env('ff8a1248297732'),
+            'username' => env('rajdeepkhachar1203@gmail.com'),
+            'password' => env('caltgavygkrnpvql'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
@@ -93,7 +93,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'rajdeepkhachar1203@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'RajdeepMailGun'),
+        'name' => env('MAIL_FROM_NAME', 'rajdeepkhachar1203@gmail.com'),
     ],
 
     /*

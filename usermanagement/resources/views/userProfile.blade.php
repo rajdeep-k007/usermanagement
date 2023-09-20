@@ -6,7 +6,7 @@
 
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ session()->get('user')->name }}'s Profile</div>
+                <div class="card-header">{{ Auth::user()->name }}'s Profile</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -15,10 +15,13 @@
                         </div>
                     @endif
                     <div class="form-label">Username</div>
-                    <p class="text-grey">{{ session()->get('user')->name }}</p>
+                    <p class="text-grey">{{ Auth::user()->name }}</p>
 
                     <div class="form-label">Email</div>
-                    <p class="text-grey">{{ session()->get('user')->email }}</p>
+                    <p class="text-grey">{{ Auth::user()->email }}</p>
+
+                    <div id ="map" style="height: 253px" >
+                    </div>
 
                     <a class="btn btn-primary btn-sm" role="button" href="{{ route('editProfile') }}" >Edit Profile</a>
                 </div>
@@ -28,4 +31,5 @@
 
     </div>
 </div>
+
 @endsection

@@ -11,25 +11,29 @@
 
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('userprofile.form.submit', session()->get('user')->id) }}">
+                    <form method="POST" action="{{ route('userprofile.form.submit', Auth::user()->id) }}">
+
+                        {{-- Needed because form support only GET/POST and here for update:patch was necessary  --}}
+                        <input type="hidden" name="_method" value="PATCH">
+
                         @csrf
                         <!-- Form fields go here -->
-                        <input type="hidden" name="id" id="userId" value="{{ session()->get('user')->id }}">
+                        <input type="hidden" name="id" id="userId" value="{{ Auth::user()->id }}" >
                         <div>
                             <div class="row mb-3">
-                                <label for="location" class="col-md-4 col-form-label text-md-end">Your location:</label>
+                                <label for="city" class="col-md-4 col-form-label text-md-end">City:</label>
 
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" name="location" id="location">
+                                    <input class="form-control" type="text" name="city" id="city" required>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="row mb-3">
-                                <label for="bio" class="col-md-4 col-form-label text-md-end">Your bio:</label>
+                                <label for="country" class="col-md-4 col-form-label text-md-end">Country:</label>
 
                                 <div class="col-md-6">
-                                    <input class="form-control" type="textarea" name="bio" id="bio">
+                                    <input class="form-control" type="text" name="country" id="country" required>
                                 </div>
                             </div>
                         </div>

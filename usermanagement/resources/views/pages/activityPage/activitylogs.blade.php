@@ -25,39 +25,47 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
+                                    <th>Time</th>
                                     <th>Description</th>
                                     <th>User</th>
                                     <th>Method</th>
                                     <th>Route</th>
                                     <th>User Ip</th>
-                                    <th>User Agent</th>
+                                    @if(Auth::user()->role=="1")
                                     <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(count($activityLogs)>0)
-                                @foreach($activityLogs as $activityLog)
+                                @foreach($activityLogs->reverse() as $activityLog)
 
                                     <tr>
                                         <td>{{ $activityLog->id }}</td>
+                                        <td>{{ $activityLog->created_at->diffForHumans() }}</td>
                                         <td>{{ $activityLog->description }}</td>
-                                        <td>{{ $activityLog->user }}</td>
+                                        <td>{{ $activityLog->user }}  ( {{$activityLog->user_agent=='1'?'Admin':'User' }} ) </td>
                                         <td>{{ $activityLog->method }}</td>
                                         <td>{{ $activityLog->route }}</td>
-                                        <td>{{ $activityLog->route }}</td>
-                                        <td>{{ $activityLog->ip_address }}</td>
-                                        <td>{{ $activityLog->user_agent=='1'?'Admin':'User' }}</td>
+                                        <td>{{ $activityLog->user_ip }}</td>
+                                        @if(Auth::user()->role=="1")
                                         <td>
-                                            <button class="btn btn-primary"
-                                                href="/editActivityLog/{{$activityLog->id}}">
-                                                Edit
-                                            </button>
-                                            <a class="btn btn-danger"
+
+                                            @if($activityLog->deleted_at != null)
+                                            <a class="btn btn-info"
+                                                href="/restoreActivity/{{$activityLog->id}}"
+                                                onclick="confirmation(event)">
+                                                Restore
+                                            </a>
+                                            @else
+                                                <a class="btn btn-danger"
                                                 href="/removeActivityLog/{{$activityLog->id}}"
                                                 onclick="confirmation(event)">
                                                 Remove
                                             </a>
+                                            @endif
                                         </td>
+                                        @endif
                                     </tr>
 
                                 @endforeach
